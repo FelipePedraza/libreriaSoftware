@@ -1,58 +1,40 @@
+
 package com.co.edu.uniquindio.libreria.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.validator.constraints.Length;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Table(name = "books")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Book {
-    
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+public class Book implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
-    
-    @Column(nullable = false)
-    private String title;
-    
-    @Column(nullable = false)
-    private String author;
-    
-    @Column(length = 1000)
-    private String description;
-    
-    @Column(name = "isbn", unique = true)
+
+    @Column(nullable = false, unique = true)
+    @Length(max = 20)
     private String isbn;
-    
-    @Column(name = "publication_date")
-    private LocalDate publicationDate;
-    
-    @Column(name = "price", precision = 10, scale = 2)
-    private BigDecimal price;
-    
-    @Column(name = "stock_quantity")
-    private Integer stockQuantity;
-    
-    @Column(name = "genre")
-    private String genre;
-    
-    @Column(name = "publisher")
-    private String publisher;
-    
-    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<com.co.edu.uniquindio.libreria.entity.Rating> ratings;
-    
-    @Column(name = "average_rating", precision = 3, scale = 2)
-    private BigDecimal averageRating = BigDecimal.ZERO;
-    
-    @Column(name = "total_ratings")
-    private Integer totalRatings = 0;
+
+    @Column(nullable = false)
+    @Length(max = 100)
+    private String title;
+
+    @Column(nullable = false)
+    @Length(max = 100)
+    private String author;
+
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Review> reviews;
 }
