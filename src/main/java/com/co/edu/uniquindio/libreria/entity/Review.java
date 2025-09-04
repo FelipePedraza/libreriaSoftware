@@ -26,6 +26,6 @@ public class Review implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "book_id", nullable = false)
-    @JsonBackReference
+    @JsonBackReference("book-review")
     private Book book;
 }

@@ -1,5 +1,6 @@
 package com.co.edu.uniquindio.libreria.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,6 +21,7 @@ public class Rating {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id", nullable = false)
+    @JsonBackReference("book-rating")
     private Book book;
     
     @Column(name = "user_id", nullable = false)

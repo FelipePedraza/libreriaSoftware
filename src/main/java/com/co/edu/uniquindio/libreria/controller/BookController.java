@@ -1,3 +1,4 @@
+
 package com.co.edu.uniquindio.libreria.controller;
 
 import com.co.edu.uniquindio.libreria.entity.Book;
@@ -18,10 +19,11 @@ public class BookController {
     }
 
     @GetMapping("/search")
-    public List<Book> searchBooks(@RequestParam(required = false) String title,
+    public List<Book> searchBooks(@RequestParam(required = false) String term,
+                                  @RequestParam(required = false) String title,
                                   @RequestParam(required = false) String author,
                                   @RequestParam(required = false) String isbn) {
-        return bookService.searchBooks(title, author, isbn);
+        return bookService.searchBooks(term, title, author, isbn);
     }
 
     @GetMapping

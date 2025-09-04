@@ -35,6 +35,10 @@ public class Book implements Serializable {
     private String author;
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @JsonManagedReference("book-review")
     private List<Review> reviews;
+
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference("book-rating")
+    private List<Rating> ratings;
 }
